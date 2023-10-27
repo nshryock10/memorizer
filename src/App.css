@@ -1,10 +1,45 @@
-.App {
-  text-align: center;
+:root{
+  --primary: rgb(65, 65, 65);
+  --secondary: rgb(85, 159, 202);
+  --tertiary: rgb(204, 142, 239);
+
+  --font-light: rgb(237, 237, 237);
+
+  --sq-btn-w: 120px;
+  --sq-btn-h: 45px;
+  --cr-btn-w: 60px;
+
+  background-color: var(--primary);
+
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.primary-button{
+  background-color: var(--secondary);
+  width: 120px;
+  height: 45px;
+  border-radius: 7px;
+  border: none;
+  margin: 5px auto;
+  color: var(--font-light);
+  font-size: 18px;
+}
+
+.circle-button{
+  height: var(--cr-btn-w);
+  width: var(--cr-btn-w);
+  border-radius: calc(var(--cr-btn-w) / 2);
+  border: none;
+  margin: 5px 15px;
+}
+
+.link{
+  text-decoration: none;
+  color: var(--font-light)
+}
+
+.App {
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -1,0 +1,66 @@
+.practice-container {
+    margin-top: 20px;
+    
+}
+
+.input-container {
+    height: 200px;
+    width: 80%; 
+    margin: 0 auto;
+}
+.text-container {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    height: inherit;
+}
+
+.text-container textarea{
+    height: 180px;
+    margin-top: 30px;
+}
+
+.text-input {
+    background-color: var(--primary);
+    border: none;
+    text-align: center;
+    color: var(--font-light);
+    font-size: 24px;
+    margin: 0 auto;
+    width: 100%;
+    
+    font-family: inherit;
+}
+
+.text-input p{
+    width: 100%;
+    text-align: center;
+} 
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    margin: 10px auto;
+    width: 50%;
+}
+
+.mic-btn,
+.keyboard-btn{
+    background-color: rgb(28, 219, 28);
+}
+.mic-btn-img{
+    height:calc(var(--cr-btn-w) / 2.2   );
+    width:calc(var(--cr-btn-w) / 2.2);
+    color: var(--font-light)
+}
+.keyboard-btn-img{
+    width:calc(var(--cr-btn-w) / 1.5);
+    height: calc(var(--cr-btn-w) / 1.5);
+    color: var(--font-light)
+}
+
+.mute {
+    background-color: red !important;
+}
