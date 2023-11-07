@@ -4,6 +4,8 @@
   --tertiary: rgb(204, 142, 239);
 
   --font-light: rgb(237, 237, 237);
+  --correct: rgb(92, 241, 69);
+  --incorrect: rgb(251, 66, 66);
 
   --sq-btn-w: 120px;
   --sq-btn-h: 45px;

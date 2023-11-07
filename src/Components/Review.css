@@ -1,0 +1,33 @@
+.accuracy-val{
+    color: var(--font-light);
+    font-size: 24px;
+    margin: 0 auto;
+    width: 100%;
+    
+    font-family: inherit;
+}
+
+.review-text-container{
+    background-color: var(--primary);
+    border: none;
+    text-align: center;
+    color: var(--font-light);
+    font-size: 24px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 30px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.correct{
+    display: inline-block;
+    color: var(--correct);
+    margin-right: 0.25em;
+}
+
+.incorrect{
+        display: inline-block;
+        color: var(--incorrect);
+        margin-right: 0.25em;
+}
