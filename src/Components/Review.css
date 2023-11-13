@@ -1,9 +1,8 @@
 .accuracy-val{
     color: var(--font-light);
-    font-size: 24px;
+    font-size: 30px;
     margin: 0 auto;
     width: 100%;
-    
     font-family: inherit;
 }
 
@@ -16,6 +15,7 @@
     margin: 0 auto;
     width: 100%;
     padding: 30px;
+    padding-top: 0px;
     font-family: inherit;
     box-sizing: border-box;
 }
@@ -30,4 +30,8 @@
         display: inline-block;
         color: var(--incorrect);
         margin-right: 0.25em;
+}
+
+.height{
+    height: 120px;
 }

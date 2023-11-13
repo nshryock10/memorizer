@@ -21,16 +21,10 @@ function Review() {
 
     }, [])
 
-    useEffect(() => {
-        console.log(legend)
-        
-    }, [answer, legend]) 
-
     const getResults = async () => {
 
         const setResults = (ans, leg) => {
-            console.log(leg)
-            console.log(ans)
+
             const results = scoreAnswer(ans, leg)
             setLegend(results[0]);
             setAnswer(results[1]);
@@ -42,7 +36,6 @@ function Review() {
         
         setResults(ans, leg);
         setIsLoading(false);
-        console.log(legend);
     }
 
   return (
@@ -56,12 +49,16 @@ function Review() {
             </div>
             <div className="review-text-container">
                 <div className="review-text"> 
-                    {legend !== null && legend.map( word => {
+                    {legend !== null && legend.map( (word, index) => {
                         return(
-                            <span className={word.className}>{word.word}</span>
+                            <span key={index} className={word.className}>{word.word}</span>
                         )
                     })}
                 </div>
+            </div>
+            <div className="vrt-btn-container height">
+                <button className="primary-button">Try again</button>
+                <button className="primary-button">Next</button>
             </div>
         </div>
         }

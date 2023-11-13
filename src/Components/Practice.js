@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import './Practice.css';
 
@@ -7,41 +8,65 @@ function Practice() {
     const [phase, setPhase] = useState('before') //options are before, during, after
     const [inputType, setInputType] = useState(null); //options are mic or keyboard
     const [speechSupported, setSpeechSupported] = useState(true);
-    const [isListening, setIsListening] = useState(false);
     const [textInput, setTextInput] = useState('');
+    const [editVoice, setEditVoice] = useState(false);
+    const [answer, setAnswer] = useState('');
     const microphoneRef = useRef(null);
     const { transcript, resetTranscript } = useSpeechRecognition();
+
+    const transcriptRef = useRef(transcript);
     
     if(!SpeechRecognition.browserSupportsSpeechRecognition()){
         setSpeechSupported(false)
     }
     
     const handleListening = () => {
-        setIsListening(true);
         SpeechRecognition.startListening({
             continuous: true,
         })
     };
 
     const stopHandle = () => {
-        setIsListening(false);
         SpeechRecognition.stopListening();
     }
 
     const handleReset = () => {
         stopHandle();
-        resetTranscript()
+        resetTranscript();
+        setTextInput('')
+    }
+
+    const handleTextChange = () => {
+
+    }
+
+    const handleFinish = () => {
+        //trigger PUT request
+        console.log(answer)
     }
 
     useEffect(() => {
-        console.log(textInput);
         if(textInput){
             setPhase('after')
+            setAnswer(textInput)
         }else{
             setPhase('before')
+            setAnswer(textInput)
         }
         
     }, [textInput])
+
+    //Review this block for use for editing voice dictation -------------- //
+    useEffect(() => {
+        
+            console.log(transcriptRef.current)
+            transcriptRef.current = transcript
+            setAnswer(transcript)
+        
+    }, [transcript])
+
+    // -------------------------------------------------------------------- //
+
 
   return (
     <div className="practice-container">
@@ -59,9 +84,23 @@ function Practice() {
         </div>}
         {
             transcript &&
+            !editVoice &&
             <div className="input-container">
                 <div className="text-input"> 
                     <p>{transcript}</p> 
+                </div>
+            </div>
+        }
+        {
+            transcript &&
+            editVoice &&
+            <div className="input-container">
+                <div className="text-input"> 
+                    <textarea 
+                        ref={transcriptRef}
+                        onChange={handleTextChange}
+                        className="text-input" 
+                    ></textarea> 
                 </div>
             </div>
         }
@@ -113,15 +152,17 @@ function Practice() {
                     className="primary-button"
                     onClick={() => {
                         setPhase('after')
+                        handleFinish()
                     }}
                 >
-                    Finish
+                    <Link className='link' to='/review'>
+                        Finish
+                    </Link>
                 </button>
                 <button 
                     className="primary-button"
                     onClick={() => {
-                        setPhase('before')
-                        handleReset()
+                        setEditVoice(true)
                     }}
                 >
                     Edit
