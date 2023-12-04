@@ -2,10 +2,3 @@
     background-color: var(--primary);
 }
 
-.vrt-btn-container{
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 200px;
-}

@@ -1,6 +1,7 @@
 :root{
   --primary: rgb(65, 65, 65);
   --secondary: rgb(85, 159, 202);
+  --secondary-dark: rgb(59, 113, 144);
   --tertiary: rgb(204, 142, 239);
 
   --font-light: rgb(237, 237, 237);
@@ -10,6 +11,7 @@
   --sq-btn-w: 120px;
   --sq-btn-h: 45px;
   --cr-btn-w: 60px;
+  --sm-cr-btn-w: 50px;
 
   background-color: var(--primary);
 
@@ -35,9 +37,43 @@
   margin: 5px 15px;
 }
 
+.sm-cir-button {
+  height: var(--sm-cr-btn-w);
+  width: var(--sm-cr-btn-w);
+  border-radius: calc(var(--sm-cr-btn-w) / 2);
+  border: none;
+  margin: 5px 15px;
+}
+
+.vrt-btn-container{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
+}
+
+.hrz-btn-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 75px;
+  margin-top: 20px;
+}
+
 .link{
   text-decoration: none;
   color: var(--font-light)
+}
+
+.def-text{
+    text-align: center;
+    color: var(--font-light);
+    font-size: 24px;
+    margin: 0 auto;
+    width: 100%;
+    
+    font-family: inherit;
 }
 
 .App {

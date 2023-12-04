@@ -1,0 +1,25 @@
+.tertiary-btn {
+    background-color: var(--tertiary);
+}
+
+.restart {
+    color: white;
+    height: 30px;
+    width: 30px;
+}
+
+.edit {
+    color: white;
+    height: 20px;
+    width: 20px;
+}
+
+.finish {
+    color: white;
+    height: 20px;
+    width: 20px;
+}
+
+.review-card {
+    background-color: var(--secondary-dark) !important;
+}

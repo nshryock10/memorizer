@@ -1,0 +1,19 @@
+.toggle-contaier{
+    height: 50px;
+    margin: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+}
+
+.toggle-btn {
+    background-color: var(--primary);
+    border: none;
+}
+
+.chev {
+    color: var(--font-light);
+    height: 40px;
+    width: 40px;
+    margin: 10px auto;
+}

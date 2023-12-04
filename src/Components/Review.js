@@ -21,6 +21,11 @@ function Review() {
 
     }, [])
 
+    const handleTryAgain = () => {
+        //trigger server request to remove answer from server
+        alert('Are you sure you want to try again?')
+    }
+
     const getResults = async () => {
 
         const setResults = (ans, leg) => {
@@ -57,7 +62,9 @@ function Review() {
                 </div>
             </div>
             <div className="vrt-btn-container height">
-                <button className="primary-button">Try again</button>
+                <button className="primary-button" onClick={handleTryAgain}>
+                    <Link className="link" to='/practice'>Try again</Link>
+                </button>
                 <button className="primary-button">Next</button>
             </div>
         </div>

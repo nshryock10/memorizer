@@ -1,6 +1,9 @@
 .practice-container {
     margin-top: 20px;
-    
+    background-color: var(--primary);
+    margin: 15px;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 .input-container {
@@ -11,6 +14,7 @@
 .text-container {
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
     height: inherit;
 }
@@ -20,8 +24,13 @@
     margin-top: 30px;
 }
 
+.text-container textarea::placeholder{
+    color: var(--font-light);
+    font-style: italic;
+}
+
 .text-input {
-    background-color: var(--primary);
+    background-color: var(--primary); 
     border: none;
     text-align: center;
     color: var(--font-light);
