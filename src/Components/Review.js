@@ -11,7 +11,6 @@ function Review(props) {
     const [legend, setLegend] = useState(props.legend);
    // const [answer, setAnswer] = useState(props.answer);
 
-   // const legend = props.legend;
     const answer = props.answer;
     const handlePhaseChange = props.handlePhaseChange;
 
@@ -64,13 +63,19 @@ function Review(props) {
                     })}
                 </div>
             </div>
-            <div className="vrt-btn-container height">
+            <div className="vrt-btn-container">
                 <button className="primary-button" onClick={() => handlePhaseChange('input')}>
                     Try Again
                 </button>
                 <button className="primary-button" onClick={props.handleRightClick}>
                     Next
                 </button>
+                {
+                    props.id === props.length &&
+                    <button className="primary-button" onClick={props.handleRightClick}>
+                    <Link className="link" to='/'> Finish </Link>
+                </button>
+                }
             </div>
         </div>
         }

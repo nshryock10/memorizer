@@ -100,6 +100,8 @@ function Practice() {
                         key={legend}
                         legend={legend}
                         answer={answer}
+                        length={cards.length}
+                        id={cardIndex + 1}
                         handleRightClick={handleRightClick}
                         handlePhaseChange={handlePhaseChange}
                     />
