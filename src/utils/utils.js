@@ -27,9 +27,9 @@ export const scoreAnswer = ( answer, legend ) => {
     let correct = 0;
     let incorrect = 0;
 
-    for(let i=0; i < legendArry.length; i++){
+    const totalLength = Math.min(answerArry.length, legendArry.length);
 
-        
+    for(let i=0; i < totalLength; i++){
 
         //check if first words match
         if(legendArry[i].word == answerArry[i].word){
@@ -55,7 +55,7 @@ export const scoreAnswer = ( answer, legend ) => {
 
     }
 
-    const accuracy = Math.round((correct / (incorrect + correct) ) * 100);
+    const accuracy = Math.round((correct / (legendArry.length) ) * 100);
 
     return [answerArry, legendArry, accuracy]
 
@@ -69,7 +69,7 @@ export const getLegend = () => {
          },
          {
             id: 2,
-            queue: 'New Creation',
+            queue: 'First',
             legend: 'But seek first his kingdom and his righteousness'
          },
          {

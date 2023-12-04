@@ -32,6 +32,11 @@
         margin-right: 0.25em;
 }
 
+.null {
+    display: inline-block; 
+    margin-right: 0.25em;
+}
+
 .height{
     height: 120px;
 }

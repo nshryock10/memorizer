@@ -10,13 +10,36 @@ function Practice() {
     const [cards, setCards] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [cardIndex, setCardIndex] = useState();
-    const [phase, setPhase] = useState('input')
+    const [phase, setPhase] = useState('input');
+    const [answer, setAnswer] = useState();
+    const [legend, setLegend] = useState();
+    const [queue, setQueue] = useState();
 
     useEffect(() => {
         setIsLoading(true)
         getCards();
-        console.log(cards)
     },[])
+
+    useEffect(() => {
+        
+        if(cards && cardIndex >= 0){
+            updateIndex();
+            setPhase('input')
+        }
+
+    }, [cardIndex])
+
+    const updateIndex = async () => {
+
+        const setInputs = (leg, q) => {
+            setLegend(leg)
+            setQueue(q)
+        }
+        
+        const legend = cards[cardIndex].legend;
+        const queue = cards[cardIndex].queue;
+        setInputs(legend, queue)
+    }
 
     const getCards = async () => {
 
@@ -60,17 +83,24 @@ function Practice() {
             (<div>
                 <ToggleBar 
                     queue={cards[cardIndex].queue} 
+                    length={cards.length}
+                    id={cardIndex + 1}
                     handleRightClick={handleRightClick}  
                     handleLeftClick={handleLeftClick}
                 />
                 {phase === 'input' && 
                     <PracticeCard 
                         queue={cards[cardIndex].queue} 
+                        setAnswer={setAnswer}
                         handlePhaseChange={handlePhaseChange}
                     />
                 }
                 {phase === 'review' && 
                     <Review 
+                        key={legend}
+                        legend={legend}
+                        answer={answer}
+                        handleRightClick={handleRightClick}
                         handlePhaseChange={handlePhaseChange}
                     />
                 }

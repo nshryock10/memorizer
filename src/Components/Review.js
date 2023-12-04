@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import { getAnswer, getLegend, scoreAnswer } from '../utils/utils';
+import { scoreAnswer } from '../utils/utils';
 import './Review.css';
 
-function Review() {
+function Review(props) {
 
     const [accuracy, setAccuracy] = useState(0);
-    const [answer, setAnswer] = useState(null);
-    const [legend, setLegend] = useState(null);
+    const [colorLegend, setColorLegend] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [legend, setLegend] = useState(props.legend);
+   // const [answer, setAnswer] = useState(props.answer);
+
+   // const legend = props.legend;
+    const answer = props.answer;
+    const handlePhaseChange = props.handlePhaseChange;
 
     // use effect 
     // async get request for the user answer and legend
@@ -18,7 +23,6 @@ function Review() {
       
         setIsLoading(true);
         getResults();
-
     }, [])
 
     const handleTryAgain = () => {
@@ -31,14 +35,13 @@ function Review() {
         const setResults = (ans, leg) => {
 
             const results = scoreAnswer(ans, leg)
-            setLegend(results[0]);
-            setAnswer(results[1]);
+            setColorLegend(results[1])
             setAccuracy(results[2]);
         }
         //replace with api request
-        const leg =  getLegend();
-        const ans =  getAnswer();
-        
+        const leg =  legend;
+        const ans =  answer;
+
         setResults(ans, leg);
         setIsLoading(false);
     }
@@ -46,7 +49,7 @@ function Review() {
   return (
     <div>
         {   answer &&
-            legend &&
+            colorLegend &&
             !isLoading &&
         <div className="review-container">
             <div className="accuracy-val">
@@ -54,18 +57,20 @@ function Review() {
             </div>
             <div className="review-text-container">
                 <div className="review-text"> 
-                    {legend !== null && legend.map( (word, index) => {
+                    {legend !== null && colorLegend.map( (word, index) => {
                         return(
-                            <span key={index} className={word.className}>{word.word}</span>
+                            <span key={index} className={word.className ? word.className : 'null'}>{word.word}</span>
                         )
                     })}
                 </div>
             </div>
             <div className="vrt-btn-container height">
-                <button className="primary-button" onClick={handleTryAgain}>
-                    <Link className="link" to='/practice'>Try again</Link>
+                <button className="primary-button" onClick={() => handlePhaseChange('input')}>
+                    Try Again
                 </button>
-                <button className="primary-button">Next</button>
+                <button className="primary-button" onClick={props.handleRightClick}>
+                    Next
+                </button>
             </div>
         </div>
         }
