@@ -65,23 +65,20 @@ export const getLegend = () => {
  return [{
             id: 1,
             queue: 'Faith',
-            legend: 'I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave himself for me. Galatians 2:20'
+            legend: 'I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave himself for me. Galatians 2:20',
+            category: 'mentor group'
          },
          {
             id: 2,
             queue: 'First',
-            legend: 'But seek first his kingdom and his righteousness'
+            legend: 'But seek first his kingdom and his righteousness',
+            category: 'mentor group'
          },
          {
             id: 3,
             queue: 'Abba Father',
-            legend: 'God sent the spirit of his son, the spirit that calls out Abba Father'
+            legend: 'God sent the spirit of his son, the spirit that calls out Abba Father',
+            category: 'mentor group'
          }
         ]
-}
-
-export const getAnswer = () => {
-    return ['i have been crucified in christ. it is no longer i who live but christ who lives in me. and this life I now live in the flesh i live by faith in the son of god who loved me and gave himself for me. galatians 2:20',
-            'seek first his kingdom and righteousness'
-            ]
 }
