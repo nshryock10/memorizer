@@ -4,6 +4,7 @@ import ToggleBar from "./ToggleBar";
 import './Practice.css';
 import { getLegend } from "../utils/utils";
 import Review from "./Review";
+import { getQueues } from "../api/api";
 
 function Practice() {
 
@@ -48,7 +49,8 @@ function Practice() {
             setCards(cardData);
         }
 
-        const cardArry = await getLegend();
+        const cardArry = await getQueues() //getLegend();
+        console.log(cardArry)
         setCardArry(cardArry);
         setCardIndex(0)
         setIsLoading(false);

@@ -1,0 +1,175 @@
+const db = require('./index');
+
+//Update answer on database
+const updateAnswer = async (req, res, next) => {
+    const answer = {
+        id: req.body.id,
+        answer: req.body.answer
+    }
+
+    db.query('UPDATE legends SET answer=$1 WHERE id=$2',
+    [answer.answer, answer.id], 
+    (err, result) => {
+
+        err ? console.log(err) : console.log('no error');
+        if(err){
+            if(err.code === '23505'){
+                res.status(409).json({error: 'Duplicate key violation'})
+            }else if(err.code === '02000'){
+                res.status(400).json({error: 'Updating non-existent row'})
+            }else if(err.code === '42804'){
+                res.status(400).json({error: 'Data type mismatch'})
+            }else if(err) {
+                res.status(500).json({error: 'Internal server error'})
+            }
+        }else{
+            res.status(201).send()
+        }
+    })
+
+}
+
+const updateAccuracy = (req, res, next) => {
+    const accuracy = {
+        id: req.body.id,
+        accuracy: req.body.accuracy
+    }
+    
+    //Update last_attempt_accuracy from table
+    db.query('UPDATE legends SET last_attempt_accuracy=$1 WHERE id=$2',
+    [accuracy.accuracy, accuracy.id],
+    (err, result) => {
+        if(err){
+            if(err.code === '23505'){
+                res.status(409).json({error: 'Duplicate key violation'})
+            }else if(err.code === '02000'){
+                res.status(400).json({error: 'Updating non-existent row'})
+            }else if(err.code === '42804'){
+                res.status(400).json({error: 'Data type mismatch'})
+            }else if(err) {
+                res.status(500).json({error: `Internal server error, ${err}`})
+            }
+        }else if(result.rowCount === 0){
+            res.status(400).json({error: 'Updating non-existent row'})
+        }else{
+            res.status(201).send()
+        }
+    })
+}
+
+//Add category to library
+const addCategory = async (req, res, next) => {
+    const category = {
+        id: req.body.id,
+        category: req.body.category
+    }
+
+    db.query('INSERT INTO categories (id, category) VALUES ($1, $2)',
+        [category.id, category.category],
+        (err, result) => {
+
+        if(err){
+            if(err.code === '23505'){
+                res.status(409).json({error: 'Duplicate key violation'})
+            }else if(err.code === '23502'){
+                res.status(400).json({error: 'Not null violation'})
+            }else if(err.code === '42804'){
+                res.status(400).json({error: 'Data type mismatch'})
+            }else if(err){
+                res.status(500).json({error: 'Internal server error'})
+            }
+        }else{
+            res.status(201).send()
+        }
+    })
+}
+
+//Add legend to library
+const addLegend = async (req, res, next) => {
+    
+    const legend = {
+        id: req.body.id,
+        catId: req.body.catId,
+        queue: req.body.queue,
+        legend: req.body.legend
+    }
+
+     db.query('INSERT INTO legends (id, category_id, queue, legend) VALUES ($1, $2, $3, $4)',
+        [legend.id, legend.catId, legend.queue, legend.legend], (err, result) => {
+
+            if(err){
+                if(err.code === '23505'){
+                    res.status(409).json({error: 'Unique id error'})
+                }else if(err.code === '23502'){
+                    res.status(400).json({error: 'Not null violation'})
+                }else if(err.code === '42804'){
+                    res.status(400).json({error: 'Data type mismatch'})
+                }else if(err){
+                    res.status(500).json({error: 'Internal server error'})
+                }
+            }else{
+                res.status(201).send()
+            }
+
+        })
+}
+
+//Update accuracy
+    //current acc
+    //overall acc
+
+
+const getLegends = async (req, res, next) => {
+    const catId = req.body.catId
+    
+    db.query('SELECT id, queue, legend FROM legends WHERE category_id=$1',[catId], (err, result) => {
+        if(err){
+            if(err.code === '42703'){
+                res.status(409).json({error: 'Undefined column'})
+            }else if(err.code === '42703'){
+                res.status(400).json({error: 'Ambiguous column names in JOINs'})
+            }else if(err.code === '42501'){
+                res.status(400).json({error: 'Insufficient priviledge'})
+            }else if(err){
+                res.status(500).json({error: 'Internal server error'})
+            }else{
+                res.status(201).send(); //check status code
+            }
+        }else{
+            res.status(200).send(result.rows)
+        }
+    })
+        
+    }
+
+const getCategories = async (req, res, next) => {
+
+    db.query('SELECT * FROM categories', (err, result) => {
+
+        if(err){
+            if(err.code === '42703'){
+                res.status(409).json({error: 'Undefined column'})
+            }else if(err.code === '42703'){
+                res.status(400).json({error: 'Ambiguous column names in JOINs'})
+            }else if(err.code === '42501'){
+                res.status(400).json({error: 'Insufficient priviledge'})
+            }else if(err){
+                res.status(500).json({error: 'Internal server error'})
+            }else{
+                res.status(201).send(); //check status code
+            }
+        }else{
+            res.status(200).send(result.rows)
+        }
+
+    })
+}
+
+module.exports = {
+    updateAnswer,
+    addCategory,
+    addLegend,
+    updateAccuracy,
+    getCategories,
+    getLegends
+}
