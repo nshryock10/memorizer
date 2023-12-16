@@ -24,6 +24,7 @@ function PracticeCard(props) {
 
     const handlePhaseChange = props.handlePhaseChange;
     const setAnswer = props.setAnswer;
+    const handleFinish = props.handleFinish;
     
     if(!SpeechRecognition.browserSupportsSpeechRecognition()){
         setSpeechSupported(false)
@@ -47,10 +48,6 @@ function PracticeCard(props) {
 
     const handleTextChange = () => {
 
-    }
-
-    const handleFinish = () => {
-        //trigger PUT request
     }
 
     useEffect(() => {
@@ -174,7 +171,7 @@ function PracticeCard(props) {
                     className="sm-cir-button tertiary-btn"
                     onClick={() => {
                         handlePhaseChange('review')
-                        handleFinish()
+                        
                     }}
                 >
                     <BoxArrowRight className="finish" />

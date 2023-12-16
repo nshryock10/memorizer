@@ -10,28 +10,7 @@ router.get('/', (req, res, next) => {
 //Get all categories
 router.get('/categories', queries.getCategories)
 
-router.get('/legends', queries.getLegends)
-
-router.get('/queues', (req, res, next) => {
-    res.status(200).json([{
-        "id": 1,
-        "queue": 'Faith',
-        "legend": 'I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave himself for me. Galatians 2:20',
-        "category": 'mentor group'
-     },
-     {
-        "id": 2,
-        "queue": 'First',
-        "legend": 'But seek first his kingdom and his righteousness',
-        "category": 'mentor group'
-     },
-     {
-        "id": 3,
-        "queue": 'Abba Father',
-        "legend": 'God sent the spirit of his son, the spirit that calls out Abba Father',
-        "category": 'mentor group'
-     }])
-});
+router.get('/legends/:catId', queries.getLegends)
 
 //Update answer on data base
 router.post('/answer', queries.updateAnswer)

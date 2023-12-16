@@ -73,11 +73,14 @@
     color: var(--primary);
     overflow: hidden; 
     transition: all .25s ease-in;
-    
+}
+
+.answer-container{
+    margin: 0px 20px;
 }
 
 .show-answer.open{
-    min-height: 100px;
+    min-height: 10px;
 }
 .incorrect.show-answer.open{
     color: var(--incorrect);

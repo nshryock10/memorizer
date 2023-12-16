@@ -4,11 +4,12 @@ const db = require('./index');
 const updateAnswer = async (req, res, next) => {
     const answer = {
         id: req.body.id,
-        answer: req.body.answer
+        answer: req.body.answer,
+        accuracy: req.body.accuracy
     }
-
-    db.query('UPDATE legends SET answer=$1 WHERE id=$2',
-    [answer.answer, answer.id], 
+    console.log(answer.accuracy)
+    db.query('UPDATE legends SET answer=$1, last_attempt_accuracy=$2 WHERE id=$3',
+    [answer.answer, answer.accuracy, answer.id], 
     (err, result) => {
 
         err ? console.log(err) : console.log('no error');
@@ -60,7 +61,7 @@ const updateAccuracy = (req, res, next) => {
 //Add category to library
 const addCategory = async (req, res, next) => {
     const category = {
-        id: req.body.id,
+       id: req.body.id,
         category: req.body.category
     }
 
@@ -69,6 +70,7 @@ const addCategory = async (req, res, next) => {
         (err, result) => {
 
         if(err){
+            console.log(err)
             if(err.code === '23505'){
                 res.status(409).json({error: 'Duplicate key violation'})
             }else if(err.code === '23502'){
@@ -120,7 +122,7 @@ const addLegend = async (req, res, next) => {
 
 
 const getLegends = async (req, res, next) => {
-    const catId = req.body.catId
+    const catId = req.params.catId
     
     db.query('SELECT id, queue, legend FROM legends WHERE category_id=$1',[catId], (err, result) => {
         if(err){
@@ -144,6 +146,8 @@ const getLegends = async (req, res, next) => {
 
 const getCategories = async (req, res, next) => {
 
+    console.log('getting categories')
+
     db.query('SELECT * FROM categories', (err, result) => {
 
         if(err){
@@ -159,6 +163,7 @@ const getCategories = async (req, res, next) => {
                 res.status(201).send(); //check status code
             }
         }else{
+            console.log(result.rows)
             res.status(200).send(result.rows)
         }
 

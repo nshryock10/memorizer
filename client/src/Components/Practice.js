@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import PracticeCard from "./PracticeCard";
 import ToggleBar from "./ToggleBar";
 import './Practice.css';
-import { getLegend } from "../utils/utils";
 import Review from "./Review";
-import { getQueues } from "../api/api";
+import { getLegends, updateAnswer } from "../utils/api";
 
 function Practice() {
 
@@ -13,8 +12,9 @@ function Practice() {
     const [cardIndex, setCardIndex] = useState();
     const [phase, setPhase] = useState('input');
     const [answer, setAnswer] = useState();
+    const [accuracy, setAccuracy] = useState(); 
     const [legend, setLegend] = useState();
-    const [queue, setQueue] = useState();
+    const [legendId, setLegendId] = useState();
 
     useEffect(() => {
         setIsLoading(true)
@@ -30,16 +30,24 @@ function Practice() {
 
     }, [cardIndex])
 
+    useEffect(() => { 
+        console.log(`accuracy updated ${accuracy}`)
+        if(accuracy >= 0){
+            console.log(`Write acc ${accuracy} to db`)
+            handleFinish()
+        }
+    }, [accuracy])
+
     const updateIndex = async () => {
 
-        const setInputs = (leg, q) => {
+        const setInputs = (leg, id) => {
             setLegend(leg)
-            setQueue(q)
+            setLegendId(id)
         }
         
         const legend = cards[cardIndex].legend;
-        const queue = cards[cardIndex].queue;
-        setInputs(legend, queue)
+        const id = cards[cardIndex].id;
+        setInputs(legend, id)
     }
 
     const getCards = async () => {
@@ -49,8 +57,7 @@ function Practice() {
             setCards(cardData);
         }
 
-        const cardArry = await getQueues() //getLegend();
-        console.log(cardArry)
+        const cardArry = await getLegends(1); //getQueues()
         setCardArry(cardArry);
         setCardIndex(0)
         setIsLoading(false);
@@ -78,6 +85,12 @@ function Practice() {
         setPhase(phaseChange)
     }
 
+    const handleFinish = async () => {
+        //trigger PUT request
+        const success = await updateAnswer(legendId, answer, accuracy)
+        console.log(success);
+    }
+
   return (
     <div>
         { isLoading && <p className='text-input'>Loading...</p> }
@@ -95,6 +108,7 @@ function Practice() {
                         queue={cards[cardIndex].queue} 
                         setAnswer={setAnswer}
                         handlePhaseChange={handlePhaseChange}
+                        handleFinish={handleFinish}
                     />
                 }
                 {phase === 'review' && 
@@ -102,6 +116,8 @@ function Practice() {
                         key={legend}
                         legend={legend}
                         answer={answer}
+                        accuracy={accuracy}
+                        setAccuracy={setAccuracy}
                         length={cards.length}
                         id={cardIndex + 1}
                         handleRightClick={handleRightClick}

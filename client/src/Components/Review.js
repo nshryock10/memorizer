@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { scoreAnswer } from '../utils/utils';
-import { ChevronDown, ChevronUp } from 'react-bootstrap-icons';
+import { ChevronDown } from 'react-bootstrap-icons';
 import classNames from "classnames";
 import './Review.css';
 
 function Review(props) {
 
-    const [accuracy, setAccuracy] = useState(0);
+    //const [accuracy, setAccuracy] = useState(0);
     const [colorLegend, setColorLegend] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [legend, setLegend] = useState(props.legend);
@@ -16,6 +16,8 @@ function Review(props) {
     const [colorAnswer, setColorAnswer] = useState();
 
     const handlePhaseChange = props.handlePhaseChange;
+    const accuracy = props.accuracy;
+    const setAccuracy = props.setAccuracy;
 
     // use effect 
     // async get request for the user answer and legend
@@ -79,7 +81,7 @@ function Review(props) {
              <ChevronDown className="sm-chev down-chev"/> :
              <ChevronDown className="sm-chev up-chev"/>}</span>
             {colorAnswer &&
-                <div className={displayAnswer}>
+                <div className={`${displayAnswer} answer-container`}>
                         {answer !== null  && colorAnswer.map( (word, index) => {
                             return(
                                     <span key={index} className={`${word.className ? word.className : 'null'} ${displayAnswer}`}>{word.word}</span>

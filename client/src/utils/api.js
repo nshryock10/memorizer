@@ -1,0 +1,51 @@
+import { v4 as uuid4 } from 'uuid';
+
+export const API_ENDPOINT = process.env.PORT ? 'production URL' : 'http://localhost:4000';
+
+export const getCategories = async () => {
+
+    const response = await fetch(`${API_ENDPOINT}/categories`,{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+
+    const categories = await response.json();
+
+    return categories
+}
+
+export const getLegends = async (catId) => {
+    
+    const response = await fetch(`${API_ENDPOINT}/legends/${catId}`, {
+        method: "GET",
+        headers:{
+            "Content-Type": "application/json",
+        }
+    })
+
+    const legends = await response.json();
+
+    return legends;
+
+}
+
+export const updateAnswer = async (id, answer, acc) => {
+
+    const response = await fetch(`${API_ENDPOINT}/answer`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            id: id,
+            answer: answer,
+            accuracy: acc
+        })
+    })
+
+    const postAnswer = response.status;
+
+    return postAnswer
+}
