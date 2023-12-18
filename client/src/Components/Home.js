@@ -11,7 +11,11 @@ function Home() {
                     Practice
                 </Link>
             </button>
-            <button className="primary-button">Add</button>
+            <button className="primary-button">
+              <Link to='add' className="link" >
+                Add
+              </Link>
+            </button>
             <button className="primary-button">Library</button>
         </div>
     </div>

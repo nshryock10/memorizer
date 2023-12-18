@@ -2,8 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './Components/Home';
 import Practice from './Components/Practice';
-import Review from './Components/Review';
 import Nav from './Components/Nav';
+import LegendInput from './Components/LegendInput';
 import {BrowserRouter as Router, Route, Routes, useSearchParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getCategories } from './utils/api';
@@ -38,7 +38,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route exact path='/practice' element={<Practice />} />
-          <Route exact path='/review' element={<Review />} />
+          <Route exact path='/add' element={<LegendInput />} />
         </Routes>
       </div>
     </Router>

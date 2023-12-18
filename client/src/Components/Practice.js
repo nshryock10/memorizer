@@ -31,7 +31,6 @@ function Practice() {
     }, [cardIndex])
 
     useEffect(() => { 
-        console.log(`accuracy updated ${accuracy}`)
         if(accuracy >= 0){
             console.log(`Write acc ${accuracy} to db`)
             handleFinish()

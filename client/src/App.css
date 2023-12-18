@@ -1,5 +1,6 @@
 :root{
   --primary: rgb(65, 65, 65);
+  --primary-light: rgb(130, 130, 130);
   --secondary: rgb(85, 159, 202);
   --secondary-dark: rgb(59, 113, 144);
   --tertiary: rgb(204, 142, 239);
