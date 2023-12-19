@@ -23,6 +23,10 @@ input, select, textarea {
     font-family: inherit;
 }
 
+select {
+    width: 85%;
+}
+
 .label {
     margin-top: 10px;
 }

@@ -12,6 +12,7 @@ function LegendInput () {
     const [catId, setCatId] = useState();
     const [isLoading, setIsLoading] = useState();
     const [legend, setLegend] = useState(null);
+    const [newCat, setNewCat] = useState(false)
 
     useEffect(() => {
         setIsLoading(true)
@@ -67,10 +68,19 @@ function LegendInput () {
                         choice={category}
                         setChoice={setCategory}
                     />
-                    <button className="sm-circle-button">
-                        <PlusLg />
-                    </button>
                     <br/>
+                    {
+                        newCat &&
+                        <div>
+                            <input 
+                                id='category'
+                                type='text'
+                                placeholder="New category"
+                                required
+                                onChange={(e) => setCategory(e.currentTarget.value)}
+                            />
+                        </div>
+                    }
                     <label className="def-text label">Queue</label>
                     <br/>
                     <input

@@ -16,7 +16,11 @@ function Home() {
                 Add
               </Link>
             </button>
-            <button className="primary-button">Library</button>
+            <button className="primary-button">
+              <Link to='library' className="link" >
+                Library
+              </Link>
+            </button>
         </div>
     </div>
   );

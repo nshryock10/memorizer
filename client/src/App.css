@@ -13,6 +13,7 @@
   --sq-btn-h: 45px;
   --cr-btn-w: 60px;
   --sm-cr-btn-w: 50px;
+  --xsm-cr-btn-w: 25px;
 
   background-color: var(--primary);
 
@@ -42,6 +43,14 @@
 .sm-cir-button {
   height: var(--sm-cr-btn-w);
   width: var(--sm-cr-btn-w);
+  border-radius: calc(var(--sm-cr-btn-w) / 2);
+  border: none;
+  margin: 5px 15px;
+}
+
+.xsm-cir-button {
+  height: var(--xsm-cr-btn-w);
+  width: var(--xsm-cr-btn-w);
   border-radius: calc(var(--sm-cr-btn-w) / 2);
   border: none;
   margin: 5px 15px;
