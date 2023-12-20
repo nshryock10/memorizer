@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from "react";
 import DropDown from "./DropDown";
 import { getCategories, getLegends } from "../utils/api";
+import Legend from "./Legend";
+import './Library.css'
 
 function Library () {
 
@@ -8,7 +10,11 @@ function Library () {
     const [category, setCategory] = useState('Select from drop down');
     const [catId, setCatId] = useState();
     const [isLoading, setIsLoading] = useState();
-    const [legends, setLegends] = useState()
+    const [legends, setLegends] = useState();
+    const [legend, setLegend] = useState();
+    const [legendId, setLegendId] = useState();
+    const [queue, setQueue] = useState();
+    const [open, setOpen] = useState(false);
 
     
 
@@ -34,11 +40,22 @@ function Library () {
         setCardArry(cardArry);
         setIsLoading(false);
     }
-
+ 
     useEffect(() => {
         setIsLoading(true)
         setCategoryOptions()
     }, [])
+
+    useEffect(() => {   
+        if(legendId){
+            for(let i=0; i < legends.length; i++){
+                if(legends[i].id === legendId){
+                    setQueue(legends[i].queue)
+                    setLegend(legends[i].legend)
+                }
+            }
+        }
+    }, [legendId])
 
     useEffect(() => {   
         if(categories){
@@ -52,12 +69,13 @@ function Library () {
 
     useEffect(() => {
         if(catId){
+            console.log(catId)
             getLegendCards();
         }
     },[catId])
 
     return (
-        <div>
+        <div className="library-container">
             <DropDown 
                 options={categories}
                 choice={category}
@@ -65,13 +83,28 @@ function Library () {
             />
             {
                 legends &&
+                !open &&
                 legends.map((legend, index) => {
                     return(
-                        <button key={index} className="primary-button">
+                        <button key={index} className="primary-button"
+                            onClick={() => {
+                                setOpen(!open)
+                                setLegendId(legend.id)
+                            }}
+                        >
                             {legend.queue}
                         </button>
                     )
                 })
+            }
+            {
+                open &&
+                <Legend 
+                    open={open}
+                    setOpen={setOpen}
+                    queue={queue}
+                    legend={legend}
+                />
             }
         </div>
     )
