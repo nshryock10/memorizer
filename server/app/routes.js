@@ -24,4 +24,7 @@ router.post('/legend', queries.addLegend)
 //Update users last attempt accuracy
 router.post('/accuracy', queries.updateAccuracy)
 
+//Update legend
+router.post('/legend/:id', queries.updateLegend)
+
 module.exports = router;

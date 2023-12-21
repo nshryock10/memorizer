@@ -69,7 +69,6 @@ function Library () {
 
     useEffect(() => {
         if(catId){
-            console.log(catId)
             getLegendCards();
         }
     },[catId])
@@ -102,8 +101,11 @@ function Library () {
                 <Legend 
                     open={open}
                     setOpen={setOpen}
+                    catId={catId}
+                    id={legendId}
                     queue={queue}
                     legend={legend}
+                    category={category}
                 />
             }
         </div>

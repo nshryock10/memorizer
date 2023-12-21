@@ -4,7 +4,7 @@ import DropDown from "./DropDown";
 import { PlusLg } from 'react-bootstrap-icons';
 import { getCategories, addLegend } from "../utils/api";
 
-function LegendInput () {
+function LegendInput (props) {
 
     const [queue, setQueue] = useState();
     const [category, setCategory] = useState('Select from drop down');
@@ -12,22 +12,7 @@ function LegendInput () {
     const [catId, setCatId] = useState();
     const [isLoading, setIsLoading] = useState();
     const [legend, setLegend] = useState(null);
-    const [newCat, setNewCat] = useState(false)
-
-    useEffect(() => {
-        setIsLoading(true)
-        setCategoryOptions()
-    }, [])
-
-    useEffect(() => {   
-        if(categories){
-            for(let i=0; i < categories.length; i++){
-                if(categories[i].category === category){
-                    setCatId(categories[i].id)
-                }
-            }
-        }
-    }, [category])
+    const [newCat, setNewCat] = useState(false);
 
     const setCategoryOptions = async () => {
 
@@ -50,6 +35,21 @@ function LegendInput () {
             addLegend(catId, queue, legend)
         }
     }
+
+    useEffect(() => {
+        setIsLoading(true)
+        setCategoryOptions()
+    }, [])
+
+    useEffect(() => {   
+        if(categories){
+            for(let i=0; i < categories.length; i++){
+                if(categories[i].category === category){
+                    setCatId(categories[i].id)
+                }
+            }
+        }
+    }, [category])
 
     if(isLoading){
         return(

@@ -70,3 +70,22 @@ export const addLegend = async (catId, queue, legend) => {
 
     return legendRes;
 }
+
+export const editLegend = async (id, queue, legend) => {
+
+    const response = await fetch(`${API_ENDPOINT}/legend/${id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            queue,
+            legend
+        })
+
+    })
+
+    const updateRes = await response.status;
+
+    return updateRes;
+}

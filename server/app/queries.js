@@ -116,6 +116,31 @@ const addLegend = async (req, res, next) => {
         })
 }
 
+const updateLegend = async (req, res, next) => {
+
+    console.log(req.body.legend, req.body.queue, req.params.id)
+    db.query('UPDATE legends SET legend=$1, queue=$2 WHERE id=$3',
+    [req.body.legend, req.body.queue, req.params.id],
+    (err, result) => {
+        if(err){
+            if(err.code === '23505'){
+                res.status(409).json({error: 'Duplicate key violation'})
+            }else if(err.code === '02000'){
+                res.status(400).json({error: 'Updating non-existent row'})
+            }else if(err.code === '42804'){
+                res.status(400).json({error: 'Data type mismatch'})
+            }else if(err) {
+                res.status(500).json({error: `Internal server error, ${err}`})
+            }
+        }else if(result.rowCount === 0){
+            res.status(400).json({error: 'Updating non-existent row'})
+        }else{
+            res.status(201).send()
+        }
+    })
+
+}
+
 //Update accuracy
     //current acc
     //overall acc
@@ -146,8 +171,6 @@ const getLegends = async (req, res, next) => {
 
 const getCategories = async (req, res, next) => {
 
-    console.log('getting categories')
-
     db.query('SELECT * FROM categories', (err, result) => {
 
         if(err){
@@ -163,7 +186,6 @@ const getCategories = async (req, res, next) => {
                 res.status(201).send(); //check status code
             }
         }else{
-            console.log(result.rows)
             res.status(200).send(result.rows)
         }
 
@@ -175,6 +197,7 @@ module.exports = {
     addCategory,
     addLegend,
     updateAccuracy,
+    updateLegend,
     getCategories,
     getLegends
 }
