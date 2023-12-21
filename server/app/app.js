@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const router = require('./routes');
 const logger = require('morgan');
 const cors = require('cors');
-//import router
 
 
 const app = express();
