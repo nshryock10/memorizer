@@ -24,6 +24,7 @@ new Pool ({
 
 module.exports = {
     query: (text, params, callback) => {
+        console.log(pool)
         return pool.query(text, params, callback)
     }
 }
