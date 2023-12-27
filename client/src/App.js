@@ -15,6 +15,7 @@ function App() {
   const [categories, setCategories] = useState()
 
   useEffect(() => {
+    console.log(process.env)
     getData();
   }, [])
 
