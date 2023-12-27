@@ -3,7 +3,7 @@ const PORT = process.env.PORT || 5432;
 
 //connection pool TBC
 
-const pool = process.env.PORT ? 
+const pool = process.env.NODE_ENV === 'production' ? 
 //production listener
 new Pool ({
     connectionString: process.env.DATABASE_URL,	// use DATABASE_URL environment variable from Heroku app 
