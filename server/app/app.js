@@ -14,7 +14,7 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, '../.././client', 'build')));
 
 app.use('/', router);
 
