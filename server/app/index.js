@@ -1,7 +1,6 @@
 const {Pool, Client} = require('pg')
 const PORT = process.env.PORT || 5432;
 
-
 //connection pool TBC
 
 const pool = process.env.PORT ? 
@@ -25,7 +24,6 @@ new Pool ({
 
 module.exports = {
     query: (text, params, callback) => {
-        console.log(process.env, PORT)
         return pool.query(text, params, callback)
     }
 }
