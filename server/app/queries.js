@@ -148,6 +148,8 @@ const updateLegend = async (req, res, next) => {
 
 const getLegends = async (req, res, next) => {
     const catId = req.params.catId
+
+    console.log(`Getting legends with id ${catId}`)
     
     db.query('SELECT id, queue, legend FROM legends WHERE category_id=$1',[catId], (err, result) => {
         if(err){
