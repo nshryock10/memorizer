@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/public', 'index.html'))
+    res.sendFile(path.join(__dirname, '../.././client/public', 'index.html'))
 })
 
 //Get all categories
