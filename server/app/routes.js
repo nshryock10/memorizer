@@ -7,6 +7,10 @@ router.get('/', (req, res, next) => {
     res.json({"info": "memorizer app"})
 });
 
+router.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/public', 'index.html'))
+})
+
 //Get all categories
 router.get('/categories', queries.getCategories)
 
