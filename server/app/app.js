@@ -18,6 +18,10 @@ app.use(express.static(path.join(__dirname, '../.././client', 'build')));
 
 app.use('/', router);
 
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../.././client/build', 'index.html'))
+})
+
 app.use((err, req, res, next) => {
     if(err){
         res.status(400).json({error: err.code})

@@ -27,8 +27,4 @@ router.post('/accuracy', queries.updateAccuracy)
 //Update legend
 router.post('/legend/:id', queries.updateLegend)
 
-router.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../.././client/build', 'index.html'))
-})
-
 module.exports = router;
