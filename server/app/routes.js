@@ -7,10 +7,6 @@ router.get('/', (req, res, next) => {
     res.json({"info": "memorizer app"})
 });
 
-router.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../.././client/public', 'index.html'))
-})
-
 //Get all categories
 router.get('/categories', queries.getCategories)
 
@@ -30,5 +26,9 @@ router.post('/accuracy', queries.updateAccuracy)
 
 //Update legend
 router.post('/legend/:id', queries.updateLegend)
+
+router.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../.././client/public', 'index.html'))
+})
 
 module.exports = router;
