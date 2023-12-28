@@ -15,7 +15,6 @@ function App() {
   const [categories, setCategories] = useState()
 
   useEffect(() => {
-    console.log(process.env)
     getData();
   }, [])
 
@@ -39,9 +38,9 @@ function App() {
         <Nav />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route exact path='/practice' element={<Practice />} />
-          <Route exact path='/add' element={<LegendInput />} />
-          <Route exact path='/library' element={<Library />} />
+          <Route exact path='practice' element={<Practice />} />
+          <Route exact path='add' element={<LegendInput />} />
+          <Route exact path='library' element={<Library />} />
         </Routes>
       </div>
     </Router>

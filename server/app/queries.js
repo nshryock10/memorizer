@@ -165,7 +165,6 @@ const getLegends = async (req, res, next) => {
                 res.status(201).send(); //check status code
             }
         }else{
-            console.log(result.rows)
             res.status(200).send(result.rows)
         }
     })
