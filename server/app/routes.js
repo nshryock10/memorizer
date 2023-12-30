@@ -10,6 +10,10 @@ router.get('/', (req, res, next) => {
 //Get all categories
 router.get('/categories', queries.getCategories)
 
+//Add legend to library
+router.post('/legend', queries.addLegend)
+
+//Get all legends
 router.get('/legends/:catId', queries.getLegends)
 
 //Update answer on data base
@@ -17,9 +21,6 @@ router.post('/answer', queries.updateAnswer)
 
 //Add new category to database
 router.post('/category', queries.addCategory)
-
-//Add legend to library
-router.post('/legend', queries.addLegend)
 
 //Update users last attempt accuracy
 router.post('/accuracy', queries.updateAccuracy)

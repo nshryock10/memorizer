@@ -88,6 +88,8 @@ const addCategory = async (req, res, next) => {
 
 //Add legend to library
 const addLegend = async (req, res, next) => {
+
+    console.log(req.body)
     
     const legend = {
         id: req.body.id,
@@ -110,6 +112,7 @@ const addLegend = async (req, res, next) => {
                     res.status(500).json({error: 'Internal server error'})
                 }
             }else{
+                console.log('added leg to db')
                 res.status(201).send()
             }
 
