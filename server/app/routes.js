@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
 router.get('/categories', queries.getCategories)
 
 //Add legend to library
-router.post('/legend', queries.addLegend)
+router.post('/add-legend', queries.addLegend)
 
 //Get all legends
 router.get('/legends/:catId', queries.getLegends)
@@ -26,6 +26,6 @@ router.post('/category', queries.addCategory)
 router.post('/accuracy', queries.updateAccuracy)
 
 //Update legend
-router.post('/legend/:id', queries.updateLegend)
+router.post('/update-legend/:id', queries.updateLegend)
 
 module.exports = router;

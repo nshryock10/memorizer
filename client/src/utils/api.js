@@ -53,7 +53,7 @@ export const updateAnswer = async (id, answer, acc) => {
 export const addLegend = async (catId, queue, legend) => {
     const newId = uuid4();
 
-    const response = await fetch(`${API_ENDPOINT}/legend`, {
+    const response = await fetch(`${API_ENDPOINT}/add-legend`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const addLegend = async (catId, queue, legend) => {
 
 export const editLegend = async (id, queue, legend) => {
 
-    const response = await fetch(`${API_ENDPOINT}/legend/${id}`, {
+    const response = await fetch(`${API_ENDPOINT}/update-legend/${id}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
