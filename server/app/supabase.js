@@ -1,7 +1,7 @@
-const db = require('./index');
+require('dotenv').config();
 const supabase = require('@supabase/supabase-js')
 
-const supabaseUrl = 'https://rxnkpotflictmuvqacys.supabase.co'
+const supabaseUrl = 'https://rxnkpotflictmuvqacys.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
@@ -160,7 +160,30 @@ const updateLegend = async (req, res, next) => {
 const getLegends = async (req, res, next) => {
     const catId = req.params.catId
 
-    console.log(`Getting legends with id ${catId}`)
+    const {data, error} = await supabaseClient
+        .from('legends')
+        .select('id, legend, queue')
+        .eq('category_id', catId)
+
+    if(error){
+        console.log('error', error)
+        if(error.code === '42703'){
+            res.status(409).json({error: 'Undefined column'})
+        }else if(error.code === '42703'){
+            res.status(400).json({error: 'Ambiguous column names in JOINs'})
+        }else if(error.code === '42501'){
+            res.status(400).json({error: 'Insufficient priviledge'})
+        }else if(error){
+            res.status(500).json({error: 'Internal server error'})
+        }else{
+            res.status(201).send(data); //check status code
+        }
+    }else{
+        console.log('legends', data)
+        res.status(200).send(data)
+    }
+
+    /*
     
     db.query('SELECT id, queue, legend FROM legends WHERE category_id=$1',[catId], (err, result) => {
         if(err){
@@ -178,7 +201,7 @@ const getLegends = async (req, res, next) => {
         }else{
             res.status(200).send(result.rows)
         }
-    })
+    }) */
         
     }
 
@@ -186,8 +209,7 @@ const getCategories = async (req, res, next) => {
 
     const {data, error} = await supabaseClient
         .from('categories')
-        .select()
-        .is('category_id', 1)
+        .select('*')
 
         if(error){
             console.log('error', error)
