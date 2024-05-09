@@ -1,9 +1,9 @@
 const db = require('./index');
-import { createClient } from '@supabase/supabase-js'
+const supabase = require('@supabase/supabase-js')
 
 const supabaseUrl = 'https://rxnkpotflictmuvqacys.supabase.co'
 const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
 //Update answer on database
 const updateAnswer = async (req, res, next) => {
@@ -13,7 +13,7 @@ const updateAnswer = async (req, res, next) => {
         accuracy: req.body.accuracy
     }
     
-    const {error} = await supabase
+    const {error} = await supabaseClient
         .from('legends')
         .update({
             answer: answer.answer,
