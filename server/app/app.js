@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes');
+const suparouter = require('./suparoutes')
 const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
@@ -16,7 +17,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, '../.././client', 'build')));
 
-app.use('/', router);
+//app.use('/', router);
+app.use('/', suparouter);
 
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../.././client/build', 'index.html'))

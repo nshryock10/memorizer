@@ -1,7 +1,10 @@
 {
     "main": "./server/app/app.js",
-    "scripts":{
+    "scripts": {
         "start": "cd server & npm install & node ./app/app.js",
         "heroku-postbuild": "cd client && npm install && npm run build"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.43.1"
     }
 }
