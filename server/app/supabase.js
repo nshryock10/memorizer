@@ -32,9 +32,9 @@ const updateAnswer = async (req, res, next) => {
         }else if(error) {
             res.status(500).json({error: 'Internal server error'})
         }
+    }else{
+        res.status(201).send()
     }
-
-    res.status(201).send()
 
 }
 
@@ -184,25 +184,28 @@ const getLegends = async (req, res, next) => {
 
 const getCategories = async (req, res, next) => {
 
-    db.query('SELECT * FROM categories', (err, result) => {
+    const {data, error} = await supabaseClient
+        .from('categories')
+        .select()
+        .is('category_id', 1)
 
-        if(err){
-            if(err.code === '42703'){
+        if(error){
+            console.log('error', error)
+            if(error.code === '42703'){
                 res.status(409).json({error: 'Undefined column'})
-            }else if(err.code === '42703'){
+            }else if(error.code === '42703'){
                 res.status(400).json({error: 'Ambiguous column names in JOINs'})
-            }else if(err.code === '42501'){
+            }else if(error.code === '42501'){
                 res.status(400).json({error: 'Insufficient priviledge'})
-            }else if(err){
+            }else if(error){
                 res.status(500).json({error: 'Internal server error'})
             }else{
                 res.status(201).send(); //check status code
             }
         }else{
-            res.status(200).send(result.rows)
+            console.log(data)
+            res.status(200).send(data)
         }
-
-    })
 }
 
 module.exports = {

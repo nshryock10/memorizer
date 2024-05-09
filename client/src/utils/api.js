@@ -1,6 +1,7 @@
 import { v4 as uuid4 } from 'uuid';
 
-export const API_ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://memorizer-94a158ea50d7.herokuapp.com' : 'http://localhost:4000';
+export const API_ENDPOINT = process.env.NODE_ENV === 'production' ? 'https://memorizer.onrender.com' : 'http://localhost:4000';
+//old 'https://memorizer-94a158ea50d7.herokuapp.com'
 
 export const getCategories = async () => {
 
