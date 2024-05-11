@@ -1,5 +1,6 @@
 require('dotenv').config();
-const supabase = require('@supabase/supabase-js')
+const supabase = require('@supabase/supabase-js');
+const e = require('express');
 
 const supabaseUrl = 'https://rxnkpotflictmuvqacys.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY
@@ -38,32 +39,34 @@ const updateAnswer = async (req, res, next) => {
 
 }
 
-const updateAccuracy = (req, res, next) => {
+const updateAccuracy = async (req, res, next) => {
     const accuracy = {
         id: req.body.id,
         accuracy: req.body.accuracy
     }
     
-    //Update last_attempt_accuracy from table
-    db.query('UPDATE legends SET last_attempt_accuracy=$1 WHERE id=$2',
-    [accuracy.accuracy, accuracy.id],
-    (err, result) => {
-        if(err){
-            if(err.code === '23505'){
-                res.status(409).json({error: 'Duplicate key violation'})
-            }else if(err.code === '02000'){
-                res.status(400).json({error: 'Updating non-existent row'})
-            }else if(err.code === '42804'){
-                res.status(400).json({error: 'Data type mismatch'})
-            }else if(err) {
-                res.status(500).json({error: `Internal server error, ${err}`})
-            }
-        }else if(result.rowCount === 0){
+    const {error} = await supabaseClient
+        .from('legends')
+        .update({
+            last_attempt_accuracy: accuracy.accuracy
+        })
+        .eq('id', accuracy.id)
+
+    if(error){
+        console.log(error)
+        if(error.code === '23505'){
+            res.status(409).json({error: 'Duplicate key violation'})
+        }else if(error.code === '02000'){
             res.status(400).json({error: 'Updating non-existent row'})
-        }else{
-            res.status(201).send()
+        }else if(error.code === '42804'){
+            res.status(400).json({error: 'Data type mismatch'})
+        }else if(error) {
+            res.status(500).json({error: 'Internal server error'})
         }
-    })
+    }else{
+        res.status(201).send()
+    }
+
 }
 
 //Add category to library
@@ -73,31 +76,33 @@ const addCategory = async (req, res, next) => {
         category: req.body.category
     }
 
-    db.query('INSERT INTO categories (id, category) VALUES ($1, $2)',
-        [category.id, category.category],
-        (err, result) => {
+    const {error} = await supabaseClient
+        .from('categories')
+        .insert([{
+            id: category.id,
+            category: category.category
+        }])
 
-        if(err){
-            console.log(err)
-            if(err.code === '23505'){
-                res.status(409).json({error: 'Duplicate key violation'})
-            }else if(err.code === '23502'){
-                res.status(400).json({error: 'Not null violation'})
-            }else if(err.code === '42804'){
-                res.status(400).json({error: 'Data type mismatch'})
-            }else if(err){
-                res.status(500).json({error: 'Internal server error'})
-            }
-        }else{
-            res.status(201).send()
+    if(error){
+        console.log(error)
+        if(error.code === '23505'){
+            res.status(409).json({error: 'Duplicate key violation'})
+        }else if(error.code === '02000'){
+            res.status(400).json({error: 'Updating non-existent row'})
+        }else if(error.code === '42804'){
+            res.status(400).json({error: 'Data type mismatch'})
+        }else if(error) {
+            res.status(500).json({error: 'Internal server error'})
         }
-    })
+    }else{
+        res.status(201).send()
+    }
 }
 
 //Add legend to library
 const addLegend = async (req, res, next) => {
 
-    console.log(req.body)
+    console.log('adding legend', req.body)
     
     const legend = {
         id: req.body.id,
@@ -106,50 +111,60 @@ const addLegend = async (req, res, next) => {
         legend: req.body.legend
     }
 
-     db.query('INSERT INTO legends (id, category_id, queue, legend) VALUES ($1, $2, $3, $4)',
-        [legend.id, legend.catId, legend.queue, legend.legend], (err, result) => {
+    const {error} = await supabaseClient
+        .from('legends')
+        .insert([{
+            id: legend.id,
+            category_id: legend.catId,
+            queue: legend.queue,
+            legend: legend.legend
+        }])
 
-            if(err){
-                if(err.code === '23505'){
-                    res.status(409).json({error: 'Unique id error'})
-                }else if(err.code === '23502'){
-                    res.status(400).json({error: 'Not null violation'})
-                }else if(err.code === '42804'){
-                    res.status(400).json({error: 'Data type mismatch'})
-                }else if(err){
-                    res.status(500).json({error: 'Internal server error'})
-                }
-            }else{
-                console.log('added leg to db')
-                res.status(201).send()
-            }
+    if(error){
+        console.log(error)
+        if(error.code === '23505'){
+            res.status(409).json({error: 'Unique id error'})
+        }else if(error.code === '23502'){
+            res.status(400).json({error: 'Not null violation'})
+        }else if(error.code === '42804'){
+            res.status(400).json({error: 'Data type mismatch'})
+        }else if(error){
+            res.status(500).json({error: 'Internal server error'})
+        }
+    }else{
+        console.log('added leg to db')
+        res.status(201).send()
+    }
 
-        })
 }
 
 const updateLegend = async (req, res, next) => {
 
     console.log(req.body.legend, req.body.queue, req.params.id)
-    db.query('UPDATE legends SET legend=$1, queue=$2 WHERE id=$3',
-    [req.body.legend, req.body.queue, req.params.id],
-    (err, result) => {
-        if(err){
-            if(err.code === '23505'){
-                res.status(409).json({error: 'Duplicate key violation'})
-            }else if(err.code === '02000'){
-                res.status(400).json({error: 'Updating non-existent row'})
-            }else if(err.code === '42804'){
-                res.status(400).json({error: 'Data type mismatch'})
-            }else if(err) {
-                res.status(500).json({error: `Internal server error, ${err}`})
-            }
-        }else if(result.rowCount === 0){
-            res.status(400).json({error: 'Updating non-existent row'})
-        }else{
-            res.status(201).send()
-        }
-    })
 
+    const {data, error} = await supabaseClient
+        .from('legends')
+        .update({
+            queue: req.body.queue,
+            legend: req.body.legend
+        })
+        .eq('id', req.params.id)
+
+    if(error){
+        console.log(error)
+        if(error.code === '23505'){
+            res.status(409).json({error: 'Duplicate key violation'})
+        }else if(error.code === '02000'){
+            res.status(400).json({error: 'Updating non-existent row'})
+        }else if(error.code === '42804'){
+            res.status(400).json({error: 'Data type mismatch'})
+        }else if(error) {
+            res.status(500).json({error: `Internal server error, ${error}`})
+        }
+    }else{
+        console.log('updated legend', data)
+        res.status(201).send()
+    }
 }
 
 //Update accuracy
@@ -179,29 +194,8 @@ const getLegends = async (req, res, next) => {
             res.status(201).send(data); //check status code
         }
     }else{
-        console.log('legends', data)
         res.status(200).send(data)
     }
-
-    /*
-    
-    db.query('SELECT id, queue, legend FROM legends WHERE category_id=$1',[catId], (err, result) => {
-        if(err){
-            if(err.code === '42703'){
-                res.status(409).json({error: 'Undefined column'})
-            }else if(err.code === '42703'){
-                res.status(400).json({error: 'Ambiguous column names in JOINs'})
-            }else if(err.code === '42501'){
-                res.status(400).json({error: 'Insufficient priviledge'})
-            }else if(err){
-                res.status(500).json({error: 'Internal server error'})
-            }else{
-                res.status(201).send(); //check status code
-            }
-        }else{
-            res.status(200).send(result.rows)
-        }
-    }) */
         
     }
 
@@ -225,7 +219,6 @@ const getCategories = async (req, res, next) => {
                 res.status(201).send(); //check status code
             }
         }else{
-            console.log(data)
             res.status(200).send(data)
         }
 }

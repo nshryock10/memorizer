@@ -56,7 +56,7 @@ function Practice() {
             setCards(cardData);
         }
 
-        const cardArry = await getLegends(1); //getQueues()
+        const cardArry = await getLegends('2B'); //getQueues()
         console.log(cardArry)
         setCardArry(cardArry);
         setCardIndex(0)
